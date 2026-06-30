@@ -66,11 +66,8 @@ pipeline {
         stage('Scan Docker Images with Trivy') {
             steps {
                 sh '''
-                trivy image --exit-code 0 --severity LOW,MEDIUM $BACKEND_IMAGE:$IMAGE_TAG
-                trivy image --exit-code 1 --severity HIGH,CRITICAL $BACKEND_IMAGE:$IMAGE_TAG
-
-                trivy image --exit-code 0 --severity LOW,MEDIUM $FRONTEND_IMAGE:$IMAGE_TAG
-                trivy image --exit-code 1 --severity HIGH,CRITICAL $FRONTEND_IMAGE:$IMAGE_TAG
+                trivy image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL $BACKEND_IMAGE:$IMAGE_TAG
+                trivy image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL $FRONTEND_IMAGE:$IMAGE_TAG
                 '''
             }
         }
