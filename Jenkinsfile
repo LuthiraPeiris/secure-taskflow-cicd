@@ -11,7 +11,7 @@ pipeline {
 
         BASTION_IP = "10.0.1.114"
         APP_PRIVATE_IP = "10.0.2.13"
-        SSH_KEY_PATH = "/home/ubuntu/taskflow-key.pem"
+        SSH_KEY_PATH = "/var/lib/jenkins/.ssh/taskflow-key.pem"
     }
 
     stages {
