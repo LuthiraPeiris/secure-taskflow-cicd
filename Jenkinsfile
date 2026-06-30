@@ -9,7 +9,7 @@ pipeline {
 
         DOCKER_CREDENTIALS = "dockerhub-credentials"
 
-        BASTION_IP = "98.92.230.83"
+        BASTION_IP = "10.0.1.114"
         APP_PRIVATE_IP = "10.0.2.13"
         SSH_KEY_PATH = "/home/ubuntu/taskflow-key.pem"
     }
