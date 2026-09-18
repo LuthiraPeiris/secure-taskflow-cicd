@@ -1,70 +1,76 @@
-# Secure CI/CD Pipeline for TaskFlow on AWS
+# TaskFlow — Secure AWS CI/CD Deployment
 
-![Project Banner](./Diagram.png)
+<p align="center">
+  <img src="Diagram.png" alt="TaskFlow AWS Architecture" width="900"/>
+</p>
+
+<p align="center">
+  <strong>A full-stack task management application deployed on AWS using a secure CI/CD pipeline with Jenkins, Docker, Trivy, and AWS EC2.</strong>
+</p>
+
+<p align="center">
+  <a href="https://github.com/LuthiraPeiris/secure-taskflow-cicd">
+    <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github" alt="GitHub Repository"/>
+  </a>
+  <img src="https://img.shields.io/badge/AWS-Cloud-orange?style=for-the-badge&logo=amazonaws" alt="AWS"/>
+  <img src="https://img.shields.io/badge/Docker-Containerized-blue?style=for-the-badge&logo=docker" alt="Docker"/>
+  <img src="https://img.shields.io/badge/Jenkins-CI%2FCD-red?style=for-the-badge&logo=jenkins" alt="Jenkins"/>
+</p>
 
 ---
 
-TaskFlow is a simple full-stack task management application deployed using a secure CI/CD pipeline with Jenkins, Docker, Trivy, Docker Hub, and AWS EC2.
+## 📌 Project Overview
 
-## Project Overview
+**TaskFlow** is a full-stack task management application developed to explore and implement a practical **AWS-based DevOps deployment workflow**.
 
-This project demonstrates how to automate the software delivery process using Jenkins hosted on AWS. The pipeline fetches code from GitHub, installs dependencies, runs tests, builds Docker images, scans images for vulnerabilities using Trivy, pushes images to Docker Hub, and deploys the application to an EC2 instance.
+The project focuses on more than application development. It demonstrates how a software application can be:
 
-## Tech Stack
+- Containerized using Docker
+- Automatically built through Jenkins
+- Security-scanned using Trivy
+- Published as Docker images
+- Deployed to a private EC2 environment
+- Hosted inside an AWS VPC with network segmentation
+- Accessed through a controlled network architecture
 
-- React
-- Node.js
-- Express.js
-- MySQL
-- Docker
-- Docker Compose
-- Jenkins
-- Trivy
-- Docker Hub
-- AWS EC2
-- AWS VPC
-- Public and Private Subnets
-- Bastion Host
-- Security Groups
+The project was built as a practical learning exercise around **AWS infrastructure, CI/CD, containerization, Linux administration, networking, and DevSecOps concepts**.
 
-## Features
+---
 
-- User registration and login
-- JWT authentication
-- Create tasks
-- View tasks
-- Mark tasks as completed
-- Delete tasks
-- Dockerized frontend and backend
-- Automated CI/CD pipeline
-- Vulnerability scanning before deployment
-- Secure AWS network design
+# 🏗️ Architecture
 
-## CI/CD Workflow
+The deployment uses a custom AWS VPC with separate public and private network layers.
 
-1. Developer pushes code to GitHub
-2. GitHub webhook triggers Jenkins
-3. Jenkins fetches the latest code
-4. Jenkins installs dependencies
-5. Jenkins runs tests
-6. Jenkins builds Docker images
-7. Trivy scans Docker images for vulnerabilities
-8. Jenkins pushes images to Docker Hub
-9. Jenkins deploys the application to AWS EC2
-
-## AWS Architecture
-
-- Jenkins runs on an EC2 instance in a public subnet
-- Bastion host provides controlled SSH access
-- Application server runs in a private subnet
-- VPC, route tables, internet gateway, NAT gateway, and security groups are used to manage networking and security
-
-## What I Learned
-
-- How to build a complete CI/CD pipeline
-- How to use Jenkins pipelines
-- How to containerize applications with Docker
-- How to scan Docker images using Trivy
-- How to push images to Docker Hub
-- How to deploy applications on AWS EC2
-- How to design a secure AWS network using public and private subnets
+```text
+                         Internet
+                            │
+                            ▼
+                     ┌──────────────┐
+                     │ Internet GW  │
+                     └──────┬───────┘
+                            │
+                 ┌──────────┴──────────┐
+                 │                     │
+                 ▼                     ▼
+        ┌─────────────────┐    ┌─────────────────┐
+        │  Jenkins EC2    │    │   Bastion Host  │
+        │  Public Subnet  │    │  Public Subnet  │
+        └────────┬────────┘    └────────┬────────┘
+                 │                      │
+                 │                      │ SSH
+                 │                      ▼
+                 │             ┌─────────────────┐
+                 │             │ Application EC2 │
+                 └────────────►│ Private Subnet  │
+                               │                 │
+                               │ Docker           │
+                               │ ├── Frontend    │
+                               │ ├── Backend      │
+                               │ └── MySQL        │
+                               └─────────────────┘
+                                        │
+                                        ▼
+                                  NAT Gateway
+                                        │
+                                        ▼
+                                    Internet
